@@ -1,0 +1,61 @@
+#stories {
+  @apply max-w-3xl mx-auto text-center;
+  
+  .stories {
+    @apply mt-1 max-w-3xl mx-auto flex p-6 bg-gray-300 rounded-lg;
+
+    li {
+      @apply mt-1 p-6 bg-gray-100 rounded-lg shadow-xl;
+
+      .first-line {
+        @apply flex items-center justify-between;
+
+        .group {
+          @apply mt-0 flex items-center;
+
+          img {
+            @apply mr-1 h-6 w-6 inline;
+          }
+        }
+      }
+
+      .second-line {
+        @apply flex mt-4 items-center justify-between;
+
+        .group {
+          @apply mt-0 flex items-center;
+        }
+
+        .state {
+          @apply px-3 py-1 rounded text-xs text-white bg-gray-700;
+        }
+        .state.ongoing {
+          @apply bg-purple-300;
+        }
+        .state.waiting {
+          @apply bg-red-300;
+        }
+
+        .assignee {
+          @apply ml-3 px-3 py-1 items-center;
+
+          .img {
+            @apply mr-1 h-4 w-4 inline            
+          }
+
+          .users {
+            @apply text-xs text-gray-500
+          }
+        }
+
+        button {
+          @apply flex items-center py-1 px-3 ml-2 bg-transparent rounded outline-none;
+
+          img {
+            @apply mr-1 h-4 w-4 inline
+          }
+        }
+      }
+    }
+  }
+}
