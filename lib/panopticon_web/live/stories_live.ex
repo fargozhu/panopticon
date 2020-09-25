@@ -111,7 +111,9 @@ defmodule PanopticonWeb.StoriesLive do
     """
   end
 
-  defp select_source_logo()
+  defp select_source_logo() do
+
+  end
 
   defp source_options do
     [
