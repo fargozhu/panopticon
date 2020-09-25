@@ -1,0 +1,693 @@
+[
+    {
+        "kind": "story",
+        "id": 172351439,
+        "created_at": "2020-04-16T10:53:13Z",
+        "updated_at": "2020-04-25T19:22:41Z",
+        "accepted_at": "2020-04-20T09:58:23Z",
+        "story_type": "chore",
+        "name": "Support for QuarksSecret to create secrets in multiple namespaces",
+        "description": "Careful about permissions here (we've discussed how one namespace shouldn't affect another, but there is a usecase in KubeCF).\n",
+        "current_state": "accepted",
+        "requested_by_id": 3094962,
+        "url": "https://www.pivotaltracker.com/story/show/172351439",
+        "project_id": 2192232,
+        "owner_ids": [
+            3094962
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3094962
+    },
+    {
+        "kind": "story",
+        "id": 172452454,
+        "created_at": "2020-04-22T10:08:13Z",
+        "updated_at": "2020-04-27T00:07:51Z",
+        "accepted_at": "2020-04-27T00:07:51Z",
+        "story_type": "bug",
+        "name": "Make sure that QuarksSecrets are not inconsistent.",
+        "description": "How to reproduce ? \nDeploy KubeCF with reduced context timeout like less than 30 sec. You will see the following message which allows for double reconcilation and thus updating all quarksecrets again.\n\n`\n2020-04-22T08:28:48.093Z\tERROR\tcontroller-runtime.controller\tcontroller/controller.go:258\tReconciler error\t{\"controller\": \"boshdeployment-controller\", \"request\": \"kubecf/kubecf\", \"error\": \"failed to create quarks secrets for BOSH manifest 'kubecf/kubecf': creating or updating QuarksSecret 'kubecf/var-router-ssl': rate: Wait(n=1) would exceed context deadline\"}\n`",
+        "current_state": "accepted",
+        "requested_by_id": 3146518,
+        "url": "https://www.pivotaltracker.com/story/show/172452454",
+        "project_id": 2192232,
+        "owner_ids": [
+            3094962
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3094962
+    },
+    {
+        "kind": "story",
+        "id": 172422262,
+        "created_at": "2020-04-20T21:24:20Z",
+        "updated_at": "2020-05-01T20:46:43Z",
+        "accepted_at": "2020-05-01T20:46:43Z",
+        "estimate": 5,
+        "story_type": "feature",
+        "name": "cloudfoundry-incubator/cf-operator #895: Provide (or document) a mechanism to specify a deployment variable value",
+        "description": "[Github Issue #895](https://github.com/cloudfoundry-incubator/cf-operator/issues/895)\n\n>I want to be able to specify a variable value when deploying kubecf, e.g.\n>\n>```\n>bosh deploy ... -v cf-admin-password=cant-guess-this\n>```\n>\n>I assumed that there is a mechanism already, as the main point of using variables is to make it easier for users to configure settings without having to write ops-files. Indeed often ops-files are provided upstream, that add additional variables to make their ...(message has been trimmed)\n\nFiled by [@jandubois](http://github.com/jandubois)\n\n## Acceptance Criteria\n\nBoshDeployment CRD supports \"user variable\" secret references (one secret reference per variable).\nThese secret references are used to interpolate values is the Desired Manifest before we use QuarksSecrets for them.\n\n> No need for another restart mechanism, these secrets are _not_ required in links",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/172422262",
+        "project_id": 2192232,
+        "owner_ids": [
+            3094962
+        ],
+        "labels": [
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 20989780,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "reopened-in-github",
+                "created_at": "2019-02-11T14:55:33Z",
+                "updated_at": "2019-02-11T14:55:33Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3094962
+    },
+    {
+        "kind": "story",
+        "id": 172993878,
+        "created_at": "2020-05-24T23:49:06Z",
+        "updated_at": "2020-08-12T08:33:39Z",
+        "accepted_at": "2020-07-06T08:27:06Z",
+        "estimate": 5,
+        "story_type": "feature",
+        "name": "entanglements should work",
+        "description": "## Acceptance Criteria\n\n- from native to bosh, we need to make sure that we preserve type information in links\n- from bosh to native, we should support both exporting a yaml that preserves type information, as well as the current exports (since they can be used as env vars)\n- services that are part of a native link may not have selectors (we have to watch for `Endpoints` changes too)\n- when rendering from native links, the flat properties should be converted to a nested map\n\n**Tests**\n- test where not all the names coincide\n- test should assert on rendering a template with link properties and instances\n- tests should have varied properties, all types (bool, int, etc)\n- checks to see all properties are correct\n- test with pods and without pods (services that only have endpoints or are ExternalName)\n\nSee these changes for fixes:\nhttps://github.com/cloudfoundry-incubator/quarks-operator/commit/e4177e32372ef26eecfce63609887a92de67de22",
+        "current_state": "accepted",
+        "requested_by_id": 3094962,
+        "url": "https://www.pivotaltracker.com/story/show/172993878",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 22555508,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "quarks-links",
+                "created_at": "2020-08-12T08:22:37Z",
+                "updated_at": "2020-08-12T08:22:37Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 172598851,
+        "created_at": "2020-04-30T07:46:34Z",
+        "updated_at": "2020-07-06T08:27:26Z",
+        "accepted_at": "2020-07-06T08:27:26Z",
+        "estimate": 3,
+        "story_type": "feature",
+        "name": "docs site for quarks",
+        "description": "## Acceptance Criteria\n\n- we have a site similar to https://kubecf.suse.dev/ (https://quarks.suse.dev)\n- every time we push to master, the site get update",
+        "current_state": "accepted",
+        "requested_by_id": 3094962,
+        "url": "https://www.pivotaltracker.com/story/show/172598851",
+        "project_id": 2192232,
+        "owner_ids": [
+            3126911
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3126911
+    },
+    {
+        "kind": "story",
+        "id": 172323986,
+        "created_at": "2020-04-15T00:26:06Z",
+        "updated_at": "2020-07-20T13:20:28Z",
+        "accepted_at": "2020-07-20T12:49:46Z",
+        "story_type": "bug",
+        "name": "cloudfoundry-incubator/cf-operator #750: Often getting multiple jobs after updating kubecf ops-files",
+        "description": "[Github Issue #750](https://github.com/cloudfoundry-incubator/cf-operator/issues/750)\n\n>When I apply a change, I usually get multiple `bpm` and `ig` jobs:\n>\n>```\n>NAME                                READY   STATUS       RESTARTS   AGE\n>bpm-kubecf-31a221bf58edc585-26ps4   0/20    Init:24/30   0          65s\n>bpm-kubecf-bcd5e3c7eeb0a857-647cg   0/20    Init:21/30   0          52s\n>ig-kubecf-b7e2c93ab14bbdb3-kmrqp    0/20    Init:19/30   0          52s\n>ig-kubecf-e142d0c421e1f13d-cbddz    0/2 ...(message has been trimmed)\n\nFiled by [@f0rmiga](http://github.com/f0rmiga)",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/172323986",
+        "project_id": 2192232,
+        "owner_ids": [
+            3146518
+        ],
+        "labels": [
+            {
+                "id": 22504056,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "bdpl-update",
+                "created_at": "2020-07-20T11:35:13Z",
+                "updated_at": "2020-07-20T11:35:38Z"
+            },
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 20989780,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "reopened-in-github",
+                "created_at": "2019-02-11T14:55:33Z",
+                "updated_at": "2019-02-11T14:55:33Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3146518
+    },
+    {
+        "kind": "story",
+        "id": 173372739,
+        "created_at": "2020-06-17T07:54:43Z",
+        "updated_at": "2020-07-20T12:50:08Z",
+        "accepted_at": "2020-07-20T12:50:08Z",
+        "story_type": "bug",
+        "name": "Fix unrendered values in ig secret",
+        "description": "[Github Issue #987](https://github.com/cloudfoundry-incubator/quarks-operator/issues/987)\n\n>Issue mentioned in KubeCF repo - https://github.com/cloudfoundry-incubator/kubecf/issues/973\n\nFiled by [@rohitsakala](http://github.com/rohitsakala)",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/173372739",
+        "project_id": 2192232,
+        "owner_ids": [
+            3146518
+        ],
+        "labels": [
+            {
+                "id": 20797457,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "closed-in-github",
+                "created_at": "2018-12-10T10:35:07Z",
+                "updated_at": "2018-12-10T10:35:07Z"
+            },
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3146518
+    },
+    {
+        "kind": "story",
+        "id": 173414214,
+        "created_at": "2020-06-19T08:14:30Z",
+        "updated_at": "2020-07-20T12:52:46Z",
+        "accepted_at": "2020-07-20T12:52:46Z",
+        "estimate": 3,
+        "story_type": "feature",
+        "name": "SLE updates trigger docker re-builds",
+        "description": "## Acceptance Criteria\n\nUpdates to SLE trigger rebuilds of our images.\n\n\n## Notes\n\nThe OBS does already rebuild our image: \nhttps://build.opensuse.org/packages/quarks-operator-base/build_reason/Cloud:Platform:quarks/SLE_15_SP1/x86_64\n\n* master should just use newest image every time it builds\n* release pipelines need to watch the registry/obs and trigger a minor bump.\n\nconcourse lftp-resource for watching obs:\nhttps://github.com/SUSE/cloudfoundry/blob/master/ci/pipelines/obs-stemcell-build/push-obs-stemcell.yml",
+        "current_state": "accepted",
+        "requested_by_id": 2860751,
+        "url": "https://www.pivotaltracker.com/story/show/173414214",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 22503720,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "releasing",
+                "created_at": "2020-07-20T09:59:25Z",
+                "updated_at": "2020-07-20T09:59:25Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 173464531,
+        "created_at": "2020-06-23T06:42:16Z",
+        "updated_at": "2020-08-03T15:08:44Z",
+        "accepted_at": "2020-08-03T15:08:44Z",
+        "story_type": "bug",
+        "name": "The current meltdown only work if there are 3 or more consecutive changes.",
+        "description": "Dry run using two consecutive changes and check if the meltdown works or not ?\nIn the first reconcilation event, the bdpl status would not have a lastReconcile field.\nIn the second immediate reconcilation event, the bdpl status would have a lastReconcile field and it will wait for meltdown time and reconcile after meltdown time\nSo, we have two reconciles for two consecutive reconcilation events.",
+        "current_state": "accepted",
+        "requested_by_id": 3146518,
+        "url": "https://www.pivotaltracker.com/story/show/173464531",
+        "project_id": 2192232,
+        "owner_ids": [
+            3146518
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3146518
+    },
+    {
+        "kind": "story",
+        "id": 173920919,
+        "created_at": "2020-07-21T13:37:55Z",
+        "updated_at": "2020-08-17T09:39:39Z",
+        "accepted_at": "2020-08-06T12:56:38Z",
+        "estimate": 3,
+        "story_type": "feature",
+        "name": "Support secret rotation for certificates",
+        "description": "https://github.com/cloudfoundry-incubator/quarks-secret/issues/19\n\nShould we also support rotation for other types?",
+        "current_state": "accepted",
+        "requested_by_id": 2860751,
+        "url": "https://www.pivotaltracker.com/story/show/173920919",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 22566656,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "secret-rotation",
+                "created_at": "2020-08-17T09:38:46Z",
+                "updated_at": "2020-08-17T09:39:10Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 174227363,
+        "created_at": "2020-08-07T07:03:52Z",
+        "updated_at": "2020-08-12T12:34:54Z",
+        "accepted_at": "2020-08-12T12:34:54Z",
+        "story_type": "bug",
+        "name": "Log rotation for instance groups",
+        "description": "## Acceptance Criteria\n\n- the logging command should run logrotate from time to time\n- the run period must be configurable (global setting for the operator)\n- solution backported to operator 4.*\n- logrotate configuration should contain these settings: https://github.com/SUSE/fissile-stemcell-SLE/tree/master/rsyslog_conf/etc/logrotate.d ",
+        "current_state": "accepted",
+        "requested_by_id": 3094962,
+        "url": "https://www.pivotaltracker.com/story/show/174227363",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 174207985,
+        "created_at": "2020-08-06T07:43:33Z",
+        "updated_at": "2020-08-13T11:25:40Z",
+        "accepted_at": "2020-08-13T11:25:40Z",
+        "estimate": 2,
+        "story_type": "feature",
+        "name": "Resource constraints for CPU working",
+        "description": "## Acceptance-Criteria\n\nWe can apply CPU constraints. Also 'requests and limits' are applied to a pod/container.\n(Just like memory)\nThere are tests for this.\n\nhttps://cloud.google.com/blog/products/gcp/kubernetes-best-practices-resource-requests-and-limits",
+        "current_state": "accepted",
+        "requested_by_id": 2860751,
+        "url": "https://www.pivotaltracker.com/story/show/174207985",
+        "project_id": 2192232,
+        "owner_ids": [
+            3126911
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3126911
+    },
+    {
+        "kind": "story",
+        "id": 174250870,
+        "created_at": "2020-08-10T07:07:55Z",
+        "updated_at": "2020-08-13T11:26:25Z",
+        "accepted_at": "2020-08-13T11:26:25Z",
+        "story_type": "bug",
+        "name": "Investigate/document deployment teardown during upgrades",
+        "description": "With `singleNamespace`, during write up of https://github.com/cloudfoundry-incubator/quarks-operator/pull/1045 I noticed that the deployments gets deleted across helm upgrades. We should investigate and or at least document (and discourage) installations with `singleNamespace`\n\n# Acceptanc Criteria\n\nDon't delete Deployments when upgrading with 'singleNamespace'. Understand why this is happening.",
+        "current_state": "accepted",
+        "requested_by_id": 3126911,
+        "url": "https://www.pivotaltracker.com/story/show/174250870",
+        "project_id": 2192232,
+        "owner_ids": [
+            3126911
+        ],
+        "labels": [
+            {
+                "id": 22503672,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "operator upgrades",
+                "created_at": "2020-07-20T09:39:52Z",
+                "updated_at": "2020-07-20T09:39:52Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3126911
+    },
+    {
+        "kind": "story",
+        "id": 173814835,
+        "created_at": "2020-07-15T14:40:36Z",
+        "updated_at": "2020-08-21T09:52:49Z",
+        "accepted_at": "2020-08-21T09:52:49Z",
+        "estimate": 5,
+        "story_type": "feature",
+        "name": "Support bosh-dns handler",
+        "description": "Implement solution from the issue. Find out about forwarding to http servers!? Does it support DOH?\n\n\n[Github Issue #1036](https://github.com/cloudfoundry-incubator/quarks-operator/issues/1036)\n\n>**Is your feature request related to a problem? Please describe.**\n>bosh-dns has a `handler` feature (https://bosh.io/docs/dns/#additional-handlers), with this feature, I could add DNS resolvers for a specific domain, below is an example:\n>\n>```\n>- cache:\n>    enabled: true\n>  domain: corp.intranet.local.\n>  source:\n>    recursors:\n>    - 10.0.0.2\n>    type: dns\n>```\n>\n>quark-operator doesn' ...(message has been trimmed)\n\nFiled by [@JimmyMa](http://github.com/JimmyMa)",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/173814835",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 20797457,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "closed-in-github",
+                "created_at": "2018-12-10T10:35:07Z",
+                "updated_at": "2018-12-10T10:35:07Z"
+            },
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 22539137,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "multi-cluster",
+                "created_at": "2020-08-05T07:30:33Z",
+                "updated_at": "2020-08-05T07:30:33Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 173739412,
+        "created_at": "2020-07-09T21:29:01Z",
+        "updated_at": "2020-08-27T14:17:30Z",
+        "accepted_at": "2020-08-26T09:15:54Z",
+        "story_type": "chore",
+        "name": "Release next operator as v6.x not v6.0.x",
+        "description": "Can close after v6.0 is released\n\n\n[Github Issue #1031](https://github.com/cloudfoundry-incubator/quarks-operator/issues/1031)\n\n>This is really more untidiness than an actual bug: The repo has many release branch names of the form `vN.0.x` which really should be `vN.x` (or maybe even `release-N` because using the `v` naming scheme for both tags and branch names can lead to confusion).\n>\n>```\n>$ git branch -r | grep -E /v[0-9]\n>  origin/v0.4.x\n>  origin/v1.0.x\n>  origin/v2.0.x\n>  origin/v3.0.x\n>  origin/v4.0.x\n>  origin/v5 ...(message has been trimmed)\n\nFiled by [@jandubois](http://github.com/jandubois)",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/173739412",
+        "project_id": 2192232,
+        "owner_ids": [
+            3094962
+        ],
+        "labels": [
+            {
+                "id": 20797457,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "closed-in-github",
+                "created_at": "2018-12-10T10:35:07Z",
+                "updated_at": "2018-12-10T10:35:07Z"
+            },
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 22226971,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "kubecf",
+                "created_at": "2020-03-19T15:45:34Z",
+                "updated_at": "2020-03-19T15:45:34Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 22503720,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "releasing",
+                "created_at": "2020-07-20T09:59:25Z",
+                "updated_at": "2020-07-20T09:59:25Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3094962
+    },
+    {
+        "kind": "story",
+        "id": 174637370,
+        "created_at": "2020-09-02T22:49:59Z",
+        "updated_at": "2020-09-08T19:32:39Z",
+        "accepted_at": "2020-09-08T19:32:39Z",
+        "story_type": "bug",
+        "name": "cloudfoundry-incubator/quarks-operator #1114: Resource limits cause bogus resource requests.",
+        "description": "[Github Issue #1114](https://github.com/cloudfoundry-incubator/quarks-operator/issues/1114)\n\n>**Describe the bug**\n>\n>Setting a memory limit on a job not only generates a kube-level memory limit (:heavy_check_mark:),\n>it also generates an identical sized memory request (:boom:). In other words, when I ask to to tell kube to keep the job's memory less than X the operator also forces the memory to be at least X. That is bogus.\n>\n>\n>**To Reproduce**\n>\n>Deployed kubecf `0.2.0-1739.gfa5c9166-d ...(message has been trimmed)\n\nFiled by [@andreas-kupries](http://github.com/andreas-kupries)",
+        "current_state": "accepted",
+        "requested_by_id": 1134058,
+        "url": "https://www.pivotaltracker.com/story/show/174637370",
+        "project_id": 2192232,
+        "owner_ids": [
+            2860751
+        ],
+        "labels": [
+            {
+                "id": 20797457,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "closed-in-github",
+                "created_at": "2018-12-10T10:35:07Z",
+                "updated_at": "2018-12-10T10:35:07Z"
+            },
+            {
+                "id": 20805492,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "github-issue",
+                "created_at": "2018-12-11T07:38:56Z",
+                "updated_at": "2018-12-11T07:38:56Z"
+            },
+            {
+                "id": 20792402,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "new-activity",
+                "created_at": "2018-12-07T10:32:52Z",
+                "updated_at": "2018-12-07T10:32:52Z"
+            },
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 2860751
+    },
+    {
+        "kind": "story",
+        "id": 174757560,
+        "created_at": "2020-09-10T16:26:54Z",
+        "updated_at": "2020-09-11T11:43:14Z",
+        "accepted_at": "2020-09-11T11:43:14Z",
+        "story_type": "bug",
+        "name": "A qsts that used to reference PVCs and is moved to EmptyDir keeps a PVC reference",
+        "description": "The expectation is that the PVCs that were created for old replicas of the sts become unbound.\nThey remain mounted for some reason.",
+        "current_state": "accepted",
+        "requested_by_id": 3094962,
+        "url": "https://www.pivotaltracker.com/story/show/174757560",
+        "project_id": 2192232,
+        "owner_ids": [
+            3094962
+        ],
+        "labels": [
+            {
+                "id": 22316814,
+                "project_id": 2192232,
+                "kind": "label",
+                "name": "suse-cap",
+                "created_at": "2020-04-24T15:27:02Z",
+                "updated_at": "2020-04-24T15:27:02Z"
+            }
+        ],
+        "owned_by_id": 3094962
+    }
+]

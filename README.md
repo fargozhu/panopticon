@@ -1,18 +1,20 @@
 # Panopticon
 
-To start your Phoenix server:
+# GitHub API client
 
-  * Setup the project with `mix setup`
-  * Start Phoenix endpoint with `mix phx.server`
+## mix.exs
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+```
+def deps do
+  [{:tentacat, "~> 2.0"}]
+end
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## sample code
 
-## Learn more
+### Get all the issues both open and with a specific label 
+```
+iex(5) client = Tentacat.Client.new(%{access_token: ""})
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+iex(5)> Tentacat.Issues.filter client, "cloudfoundry-incubator", "kubecf", %{"state" => "open", "labels" => "suse-cap"}
+```
