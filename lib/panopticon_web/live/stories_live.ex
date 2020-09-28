@@ -48,4 +48,5 @@ defmodule PanopticonWeb.StoriesLive do
   defp statistics(stories) do
     %{total: 10, progress: 5, waiting: 1}
   end
+
 end
