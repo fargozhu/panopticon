@@ -17,8 +17,8 @@ defmodule PanopticonWeb.Router do
   scope "/", PanopticonWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
-    live "/stories", StoriesLive
+    #live "/", PageLive, :index
+    live "/", StoriesLive
   end
 
   # Other scopes may use custom stacks.
