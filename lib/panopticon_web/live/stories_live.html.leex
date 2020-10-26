@@ -3,58 +3,62 @@
         <div id="stats" class="flex grid grid-cols-3">
             <!-- First coulmn -->
             <div class="flex">
-                <div class="flex items-center">
-                    <label class="block capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
+                <div class="">
+                    <label class="capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
                         Total
                     </label>
-                    <label class="pl-1 block tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
+                    <label class="pl-1 tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
                         <%= @total%>
                     </label>
                 </div>
-                <div class="pl-4 flex items-center">
-                    <label class="block capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
-                        Waiting
+                <div class="pl-4">
+                    <label class="capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
+                        <a href=#>Waiting</a>
                     </label>
-                    <label class="pl-1 block tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
+                    <label class="pl-1 tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
                         <%= @waiting%>
                     </label>
                 </div>
-                <div class="pl-4 flex items-center">
-                    <label class="block capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
-                        In Progress
+                <div class="pl-4">
+                    <label class="capitalize tracking-wide text-gray-900 text-xs font mb-2" for="sources">
+                        <a href=#>In Progress</a>
                     </label>
-                    <label class="pl-1 block tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
+                    <label class="pl-1 tracking-wide text-gray-900 text-xs font-bold mb-2" for="sources">
                         <%= @progress%>
                     </label>
                 </div>
             </div>
             <!-- Second Column -->
-            <div class="flex" id="filter-by-source">
-                <div class="flex items-center">
-                    <span class="block tracking-wide text-gray-900 text-xs font mb-2">Filter by Source</span>
+            <form phx-change="filter">
+                <div class="flex" id="filter-by-source">
+                    <div>
+                        <span class="tracking-wide text-gray-900 text-xs font mb-2">Filter by</span>
+                    </div>
+                    <div class="pl-2">
+                        <select name="source" class="appearance-none text-xs block w-full bg-gray-200 border border-gray-400 text-gray-700 py-1 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value="all">*</option>
+                            <option value="github">GitHub</option>
+                            <option value="jira">Jira</option>
+                            <option value="pivotal">Pivotal</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="pl-4 flex items-center">
-                    <select class="appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="source-type">
-                        <option>*</option>
-                        <option>GitHub</option>
-                        <option>Jira</option>
-                        <option>Pivotal</option>
-                    </select>
-                </div>
-            </div>
+            </form>
             <!-- Third Column -->
-            <div class="flex">
-                <div class="flex items-center">
-                    <span class="block tracking-wide text-gray-900 text-xs font mb-2">Filter by Priority</span>
+            <form phx-change="sort">
+                <div class="flex">
+                    <div>
+                        <span class="tracking-wide text-gray-900 text-xs font mb-2">Ordery by</span>
+                    </div>
+                    <div class="pl-2">
+                        <select id="priority-filter" class="appearance-none text-xs bg-gray-200 border border-gray-400 text-gray-700 py-1 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value="all">*</option>
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="pl-4 flex items-center">
-                    <select class="appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="source-type">
-                        <option>*</option>
-                        <option>High</option>
-                        <option>Low</option>
-                    </select>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -86,30 +90,32 @@
                         </span>
                         <!-- issue type -->
                         <div class="ml-3 px-3 py-1 items-center">
-                        <img class="mr-1 h-4 w-4 inline" src="/images/ban.svg">
-                        <span class="text-xs text-gray-500">
-                            <%= story.type %>
-                        </span>
+                            <img class="mr-1 h-4 w-4 inline" src="<%= type_logo(story) %>">
+                            <span class="text-xs text-gray-500">
+                                <%= story.type %>
+                            </span>
                         </div>
                         <!-- issue type -->
                         <div class="ml-3 px-3 py-1 items-center">
-                        <img class="mr-1 h-4 w-4 inline" src="/images/arrow-circle-up.svg">
-                        <span class="text-xs text-gray-500">
-                            high
-                        </span>
+                            <img class="mr-1 h-4 w-4 inline" src="/images/high-importance.png">
+                            <span class="text-xs text-gray-500">
+                                high
+                            </span>
                         </div>
                         <!-- assignee name -->
                         <div class="ml-3 px-3 py-1 items-center">
-                        <img class="mr-1 h-4 w-4 inline" src="/images/users.svg">
-                        <span class="text-xs text-gray-500">
-                            <%= story.assignee %>
-                        </span>
+                            <img class="mr-1 h-4 w-4 inline" src="/images/user_blue.png">
+                            <span class="text-xs text-gray-500">
+                                <%= story.assignee %>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                    <!-- expand button -->
-                    <button class="flex items-center py-1 px-3 ml-2 bg-transparent rounded outline-none">
-                        <img class="mr-1 h-4 w-4 inline" src="/images/chevron-down.svg">
-                    </button>
+                    <div>
+                        <!-- expand button -->
+                        <button class="flex items-center py-1 px-3 ml-2 bg-transparent rounded outline-none">
+                            <img class="mr-1 h-4 w-4 inline" src="/images/chevron-down.svg">
+                        </button>
+                    </div>
                 </div>
             </li>
             <% end %>

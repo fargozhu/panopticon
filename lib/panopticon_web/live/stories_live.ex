@@ -6,13 +6,21 @@ defmodule PanopticonWeb.StoriesLive do
   def mount(_params, _session, socket) do
     socket = assign(
       socket,
-      stories: Stories.fetch_all_stories(),
+      stories: Stories.fetch_stories(),
       total: 0,
       progress: 0,
-      waiting: 0
+      waiting: 0,
+      filter: "",
+      order: ""
     )
 
     { :ok, socket }
+  end
+
+  def handle_event("filter", %{ "filter" => filter } , socket) do
+    stories = Stories.fetch_stories(filter)
+    socket = assign(socket, [filter: filter, stories: stories])
+    { :noreply, socket }
   end
 
   defp select_source_logo(story) do
@@ -38,6 +46,28 @@ defmodule PanopticonWeb.StoriesLive do
         "/images/github.png"
       story.source == "jira" ->
         "/images/github.png"
+    end
+  end
+
+  defp type_logo(story) do
+    cond do
+      story.type == "bug" ->
+        "/images/bug.png"
+      story.type == "feature" ->
+        "/images/feature.png"
+      story.type == "chore" ->
+        "/images/chore.png"
+    end
+  end
+
+  defp priority_logo(story) do
+    cond do
+      story.priority == "high" ->
+        "/images/high_importance.png"
+      story.type == "low" ->
+        "/images/low_importance.png"
+      true ->
+        "/images/unknonw_importance.png"
     end
   end
 
