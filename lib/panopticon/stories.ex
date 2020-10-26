@@ -1,23 +1,34 @@
 defmodule Panopticon.Stories do
 
-  defstruct id: nil, title: "", url: "", assignee: "", type: "", source: ""
+  defstruct id: nil, title: "", url: "", assignee: "", type: "", source: "", priority: ""
 
-  def fetch_all_stories() do
+  def fetch_stories() do
     fetch_pivotal_issues()
     |> Enum.concat(fetch_github_issues())
+  end
+
+  def fetch_stories(filter) when is_nil(filter) == false do
+    case filter do
+      "github" ->
+          fetch_github_issues()
+      "pivotal" ->
+          fetch_pivotal_issues()
+      _ ->
+        fetch_stories()
+    end
   end
 
   def is_assigned?(stories) do
     !is_nil(stories.assignee)
   end
 
-  defp fetch_github_issues() do
+  def fetch_github_issues() do
     with { :ok, body } <- File.read("./assets/json/github.json"),
          { :ok, json } <- Poison.decode(body),
          { :ok, issues } <- map_github_issues(json), do: issues
   end
 
-  defp fetch_pivotal_issues() do
+  def fetch_pivotal_issues() do
     with { :ok, body } <- File.read("./assets/json/pivotaltracker.json"),
          { :ok, json } <- Poison.decode(body),
          { :ok, issues } <- map_pivotal_issues(json), do: issues
@@ -33,6 +44,7 @@ defmodule Panopticon.Stories do
           assignee: story["owned_by_id"],
           source: "pivotal",
           type: story["story_type"],
+          priority: "high"
         }
       end)
   end
@@ -47,6 +59,7 @@ defmodule Panopticon.Stories do
           assignee: story["assignee"]["login"],
           source: "github",
           type: get_github_issue_type(story["labels"]),
+          priority: "high"
         }
       end)
   end
